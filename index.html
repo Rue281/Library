@@ -9,26 +9,34 @@
     <script src="https://kit.fontawesome.com/65d04998ff.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <form id="book-form" method="post" onsubmit="return false">
+    <header>
+        <img src="assets/logo.png">
+        <h1>Library</h1>
+    </header>
+    <div class="container">
+        <div class="books-container">
+            <button id="add"><i class="fa-solid fa-plus"></i></button>
+        </div>
 
-        <label for="title">Title</label>
-        <input id="title" type="text" name="title" required/>
+        <form id="book-form" method="post" onsubmit="return false">
 
-        <label for="author">Author</label>
-        <input id="author" type="text" name="author" required/>
-        
-        <label for="pages">Number of pages</label>
-        <input id="pages" type="number" name="pages" min="0" max="999999" required/>
+            <label for="title">Title</label>
+            <input id="title" type="text" name="title" required/>
 
-        <label for="read">Have you read it?</label>
-        <input id="read" type="checkbox" name="read"/>
+            <label for="author">Author</label>
+            <input id="author" type="text" name="author" required/>
+            
+            <label for="pages">Number of pages</label>
+            <input id="pages" type="number" name="pages" min="0" max="999999" required/>
 
-        <button id= "submitBtn" type="submit">Add Book</button>
+            <label for="read">Have you read it?</label>
+            <input id="read" type="checkbox" name="read"/>
 
-    </form>
+            <button id= "submitBtn" type="submit">Add Book</button>
 
-    <button id="add"><i class="fa-solid fa-plus"></i></button>
+        </form>
 
+    </div>
     
     <script src="script.js"></script>
 </body>
