@@ -1,6 +1,7 @@
 let form = document.getElementById("book-form");
 let container = document.getElementsByClassName("container")[0];
 let booksContainer = document.getElementsByClassName("books-container")[0];
+let booksGrid = document.getElementsByClassName("books-grid")[0];
 let addBtn = document.getElementById("add");
 let iTag = addBtn.getElementsByClassName("fa-plus")[0];
 let submitBtn = document.getElementById("submitBtn");
@@ -8,7 +9,6 @@ let title = document.getElementById("title");
 let author = document.getElementById("author");
 let pages = document.getElementById("pages");
 let readCheckBox = document.getElementById("read");
-
 
 function Book(title,author,pages,readCheckBox){
     this.title = title;
@@ -26,11 +26,16 @@ function Book(title,author,pages,readCheckBox){
 let myLibrary = [];
 
 addBtn.addEventListener("click",function(){
-    //When the user clicks the button, open the form
+    //add animation-related classes to submit button
     iTag.classList.add("fa-beat");
     iTag.style = 
     "--fa-animation-duration: 1s;--fa-animation-iteration-count: 1;";
-    form.style.display = "block";
+    //When the user clicks the button, display the form
+    form.style.display = "grid";
+    form.style.gridTemplateColumns = "1fr 1fr";
+    form.style.rowGap = "1em";
+    form.style.alignItems = "center";
+
     booksContainer.style.opacity = "0.1";
 });
 
@@ -38,53 +43,30 @@ addBtn.addEventListener("click",function(){
 window.onload = function(){
 	
     document.onclick = function(e){
-        if(e.target === container){
-            //close the form
-            form.style.display = "none";
-            //clear form fields
-            clear();
-            //remove animation-related classes
-            iTag.classList.remove("fa-beat");
-            iTag.style.removeProperty("--fa-animation-duration","--fa-animation-iteration-count");
-            booksContainer.style.opacity = "1";
-        }
+        console.log(e.target);
+        
+        //###TODO :should be handeled by event propagation ###
+            if(e.target === container ||
+                e.target === document.getElementsByTagName("header")[0]
+                ){
+                        
+                //close the form and remove grid-related styles
+                form.style.display = "none";
+                form.style.removeProperty("grid-template-columns");
+                form.style.removeProperty("row-gap");
+                form.style.removeProperty("align-items");
+
+                //clear form fields
+                clear();
+                //remove animation-related classes
+                iTag.classList.remove("fa-beat");
+                iTag.style.removeProperty("--fa-animation-duration");
+                iTag.style.removeProperty("--fa-animation-iteration-count");
+                booksContainer.style.opacity = "1";
+            }
     };
 };
 
-
-
-// When the user clicks anywhere outside of the form, close it and clear form fields
-/*window.onclick = function(event) {
-
-        if(event.target !==form){
-            //close the form
-            //form.style.display = "none";
-            //clear form fields
-            clear();
-            //remove animation-related classes
-            iTag.classList.remove("fa-beat");
-            iTag.style.removeProperty("--fa-animation-duration","--fa-animation-iteration-count");
-            console.log("event.target NOT EQUAL THE FORM");
-        }
-        else{
-            console.log("event.target == form");
-        }
-    
-
-    /*if (event.target == form) {
-
-        //remove animation class
-        iTag.classList.remove("fa-beat");
-        iTag.style.removeProperty("--fa-animation-duration","--fa-animation-iteration-count");
-        //form.style.removeProperty("position");
-
-        //if form display: block change it to none
-        form.style.display = "none";
-        //form.style.removeProperty("position");
-
-        clear();
-    }
-  }*/
 
 //add books to myLibrary
 submitBtn.addEventListener("click",function(event){
@@ -114,13 +96,21 @@ function clear(){
 
 //create books grids
 function createBooksGrid(title,author,numberOfPages,readCheckBox){
-let books = document.createElement("div");
-books.id = "books";
-booksContainer.appendChild(books);
+let book = document.createElement("div");
+book.id = "book";
+//set book styles
+book.style.background ="#ffedd5";
+book.style.textAlign = "center";
+book.style.padding = "1em";
+book.style.borderRadius = "15px";
+book.style.height = "15vmax";
+book.style.width = "15vmax";
+book.style.fontSize = "1vmax";
+booksGrid.appendChild(book);
 
 let bookInfo = document.createElement("div");
 bookInfo.id = "book-info";
-books.appendChild(bookInfo);
+book.appendChild(bookInfo);
 
 let bookTitle = document.createElement("h1");
 bookTitle.id = "book-title";
@@ -139,6 +129,6 @@ bookInfo.appendChild(bookPages);
 
 let bookRead = document.createElement("h3");
 bookRead.id = "book-read";
-readCheckBox === true ? bookRead.textContent = "yes" : bookRead.textContent = "no";
+readCheckBox === true ? bookRead.textContent = "finished reading" : bookRead.textContent = "not completed yet";
 bookInfo.appendChild(bookRead);
 }
