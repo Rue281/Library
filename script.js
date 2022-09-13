@@ -40,7 +40,7 @@ addBtn.addEventListener("click",function(){
 });
 
 
-window.onload = function(){
+/*window.onload = function(){
 	
     document.onclick = function(e){
         console.log(e.target);
@@ -65,9 +65,73 @@ window.onload = function(){
                 booksContainer.style.opacity = "1";
             }
     };
-};
+};*/
 
 
+/*window.onload = function(){*/
+    document.addEventListener("click",function(e){
+        console.log(e.target.id); 
+        //}
+        if(form.style.display === "grid"){
+            
+                booksGrid.addEventListener("click",function(){
+                form.style.display = "none";
+                //remove animation-related classes
+                iTag.classList.remove("fa-beat");
+                iTag.style.removeProperty("--fa-animation-duration");
+                iTag.style.removeProperty("--fa-animation-iteration-count");
+                booksContainer.style.opacity = "1";
+            });
+
+            container.addEventListener("click",function(){
+                form.style.display = "none";
+                //remove animation-related classes
+                iTag.classList.remove("fa-beat");
+                iTag.style.removeProperty("--fa-animation-duration");
+                iTag.style.removeProperty("--fa-animation-iteration-count");
+                booksContainer.style.opacity = "1";
+            },{capture:true});
+        }
+        if(form.style.display ==="none"){
+            booksGrid.addEventListener("click",function(){
+                e.preventDefault();
+                e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+            },{capture:true});
+
+            container.addEventListener("click",function(){
+                e.preventDefault();
+                e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+            },{capture:true});
+        }
+    });
+//}
+
+document.addEventListener("click", function(e){
+    //select form except submit button
+    //if(e.target === form)
+    if(form.contains(e.target))
+    {
+        /*e.preventDefault();*/
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        console.log(e.target.id);
+        //form.style.display("grid");
+        return false;
+    }
+},{capture:true});
+
+
+/*form.addEventListener("click",function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    return false;
+},{capture:true});*/
+    
 //add books to myLibrary
 submitBtn.addEventListener("click",function(event){
 
